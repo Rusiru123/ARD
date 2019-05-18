@@ -1,0 +1,3 @@
+Bob can reconstruct Alice's phone number by computing the values of a and b from the values (f(4) and f(5)) he has received. Bob can perform this procedure using any two err-mails, so the erasure code in this example has a rate of 40%.
+
+Note that Alice cannot encode her telephone number in just one err-mail, because it contains six characters, and that the maximum length of one err-mail message is five characters. If she sent her phone number in pieces, asking Bob to acknowledge receipt of each piece, at least four messages would have to be sent anyway (two from Alice

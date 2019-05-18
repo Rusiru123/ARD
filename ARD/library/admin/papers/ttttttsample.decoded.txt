@@ -1,0 +1,12 @@
+Bob can reconstruct Alice's phone number by computing the values of a and b from the values (f(4) and f(5)) he has received. Bob can perform this procedure using any two err-mails, so the erasure code in this example has a rate of 40%.
+
+Note that Alice cannot encode her telephone number in just one err-mail, because it contains six characters, and that the maximum length of one err-mail message is five characters. If she sent her phone number in pieces, asking Bob to acknowledge receipt of each piece, at least four messages would have to be sent anyway (two from Alice, and two acknowledgments from Bob). So the erasure code in this example, which requires five messages, is quite economical.
+
+This example is a little bit contrived. For truly generic erasure codes that work over any data set, we would need something other than the f(i) given.
+
+General case
+The linear construction above can be generalized to polynomial interpolation. Additionally, points are now computed over a finite field.
+
+First we choose a finite field F with order of at least n, but usually a power of 2. The sender numbers the data symbols from 0 to k - 1 and sends them. He then constructs a (Lagrange) polynomial p(x) of order k such that p(i) is equal to data symbol i. He then sends p(k), ..., p(n - 1). The receiver can now also use polynomial interpolation to recover the lost packets, provided he receives k symbols successfully. If the order of F is less than 2b, where b is the number of bits in a symbol, then multiple polynomials can be used.
+
+The sender can construct symbols k to n - 1 'on the fly', i.e., distribute the workload evenly between transmission of the symbols. If the receiver wants to do his calculations 'on the fly', he can construct a new polynomial q, such that q(i) = p(i) if symbol i < k was received successfully and q(i) = 0 when symbol i < k was not received. Now let r(i) = p(i) - q(i). Firstly we know that r(i) = 0 if symbol i < k has been received successfully. Secondly, if symbol i =k has been received successfully, then r(i) = p(i) - q(i) can be calculated. So we have enough data points to construct r and evaluate it to find the lost packets. So both the sender and the receiver require O(n (n - k)) operations and only O(n - k) space for operating 'on the fly'.
